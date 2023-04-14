@@ -179,12 +179,15 @@ def saveGame(Player1):
             os.system('cls')
             return 1
         
-def loadGame(Player1):
+def loadGame(gameWindow, font1, Player1, clock):
+    BLACK = (0,0,0)
+    WHITE = (255,255,255)
+    posX = 250
+    posY = 200
     loadNames = [""] * 4
     loadChp = [""] * 4
     loadType = [""] * 4
-
-    for x in range(1, 5, 1):
+    for x in range(1, 5):
         filePath = "c:/Users/nicho/Documents/My Creation/Game Saves/SaveGame" + str(x) + ".txt"
         try:
             with open(filePath, "r") as file:
@@ -199,7 +202,9 @@ def loadGame(Player1):
                         loadChp[x -1] = y
                     z = z + 1
         except Exception:
-            print("Error retrieving data from loading files")
+            loadNames[x - 1] = ""
+            loadType[x - 1] = ""
+            loadChp[x -1] = ""
 
     for x in range(4):
         match loadType[x]:
@@ -211,53 +216,119 @@ def loadGame(Player1):
                 loadType[x] = "Assassin"
             case 4:
                 loadType[x] = "Monk"
+            case _:
+                loadType[x] = ""
+    
+    gameWindow.fill(BLACK)
+    textSurf = font1.render("Load Game", True, WHITE)
+    gameWindow.blit(textSurf, (posX - 20, posY- 20))
+    slot1 = font1.render("Slot 1 - Name: " + loadNames[0] + " " * (10 - len(loadNames[0])) + "Type: " + loadType[0] + " " * (12 - len(loadType[0])) + "Chapter: " + str(loadChp[0]), True, WHITE)
+    slot2 = font1.render("Slot 2 - Name: " + loadNames[1] + " " * (10 - len(loadNames[1])) + "Type: " + loadType[1] + " " * (12 - len(loadType[1])) + "Chapter: " + str(loadChp[1]), True, WHITE)
+    slot3 = font1.render("Slot 3 - Name: " + loadNames[2] + " " * (10 - len(loadNames[2])) + "Type: " + loadType[2] + " " * (12 - len(loadType[2])) + "Chapter: " + str(loadChp[2]), True, WHITE)
+    slot4 = font1.render("Slot 4 - Name: " + loadNames[3] + " " * (10 - len(loadNames[3])) + "Type: " + loadType[3] + " " * (12 - len(loadType[3])) + "Chapter: " + str(loadChp[3]), True, WHITE)
 
-    saveSlot = 0
-    os.system('cls')
-    print("Which save slot would you like to load?")
-    print("\n1. Slot 1 - Name: " + loadNames[0] + " " * (10 - len(loadNames[0])) + "Type: " + loadType[0] + " " * (12 - len(loadType[0])) + "Chapter: " + str(loadChp[0]))
-    print("\n1. Slot 2 - Name: " + loadNames[1] + " " * (10 - len(loadNames[1])) + "Type: " + loadType[1] + " " * (12 - len(loadType[1])) + "Chapter: " + str(loadChp[1]))
-    print("\n1. Slot 3 - Name: " + loadNames[2] + " " * (10 - len(loadNames[2])) + "Type: " + loadType[2] + " " * (12 - len(loadType[2])) + "Chapter: " + str(loadChp[2]))
-    print("\n1. Slot 4 - Name: " + loadNames[3] + " " * (10 - len(loadNames[3])) + "Type: " + loadType[3] + " " * (12 - len(loadType[3])) + "Chapter: " + str(loadChp[3]))
-    goodSave = False
-    while not goodSave:
-        try:
-            chosen = False
-            while not chosen:
-                saveSlot = int(input("\nPlease choose an action: "))
-                if saveSlot <= 0 or saveSlot > 4:
-                    print("\nPlease choose one of the available slots")
-                else:
+    posY1 = posY + 50
+    posY2 = posY + 100
+    posY3 = posY + 150
+    posY4 = posY + 200
+    gameWindow.blit(slot1, (posX, posY1))
+    gameWindow.blit(slot2, (posX, posY2))
+    gameWindow.blit(slot3, (posX, posY3))
+    gameWindow.blit(slot4, (posX, posY4))
+    selected = 1
+    pos2 = posY1 - 10
+    pygame.draw.rect(gameWindow, WHITE, ((posX - 10), (posY1 - 10), 1200, 50), 1)
+    pygame.display.flip()
+    chosen = False
+    while not chosen:
+        clock.tick(30)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return Player1, False
+                if event.key == pygame.K_DOWN:
+                    if selected == 1:
+                        if loadNames[1] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY2 - 10
+                            selected = 2
+                        elif loadNames[2] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY3 - 10
+                            selected = 3
+                        elif loadNames[3] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY4 - 10
+                            selected = 4
+                    elif selected == 2:
+                        if loadNames[2] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY3 - 10
+                            selected = 3
+                        elif loadNames[3] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY4 - 10
+                            selected = 4
+                    elif selected == 3:
+                        if loadNames[3] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY4 - 10
+                            selected = 4
+                if event.key == pygame.K_UP:
+                    if selected == 4:
+                        if loadNames[2] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY3 - 10
+                            selected = 3
+                        elif loadNames[1] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY2 - 10
+                            selected = 2
+                        elif loadNames[0] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY1 - 10
+                            selected = 1
+                    elif selected == 3:
+                        if loadNames[1] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY2 - 10
+                            selected = 2
+                        elif loadNames[0] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY1 - 10
+                            selected = 1
+                    elif selected == 2:
+                        if loadNames[0] != "":
+                            pygame.draw.rect(gameWindow, BLACK, ((posX - 10), (pos2), 1200, 50), 1)
+                            pos2 = posY1 - 10
+                            selected = 1
+                if event.key == pygame.K_RETURN:
                     chosen = True
-            filePath = "c:/Users/nicho/Documents/My Creation/Game Saves/SaveGame" + str(saveSlot) + ".txt"
-            with open(filePath, "r") as file:
-                fileList = json.loads(file.read())
-                y = 0
-                for x in fileList:
-                    match y:
-                        case 0:
-                            Player1.name = x
-                        case 1:
-                            Player1.type = int(x)
-                        case 2:
-                            Player1.health = int(x)
-                        case 3:
-                            Player1.armour = int(x)
-                        case 4:
-                            Player1.weaponDmg = int(x)
-                        case 5:
-                            Player1.crit = int(x)
-                        case 6:
-                            Player1.miss = int(x)
-                        case 7:
-                            Player1.numSlain = int(x)
-                        case 8:
-                            Player1.currentChp = int(x)
-                    y = y + 1
-                print("Game Loaded Successfully")
-                goodSave = True
-                input("\n(Press ENTER to continue...)")
-                os.system('cls')
-        except Exception:
-            print("\nPlease choose one of the available slots")
-
+                    filepath = "c:/Users/nicho/Documents/My Creation/Game Saves/SaveGame" + str(selected) + ".txt"
+                    with open(filepath, 'r') as file:
+                        fileList = json.loads(file.read())
+                        y = 0
+                        for x in fileList:
+                            match y:
+                                case 0:
+                                    Player1.name = x
+                                case 1:
+                                    Player1.type = int(x)
+                                case 2:
+                                    Player1.health = int(x)
+                                case 3:
+                                    Player1.armour = int(x)
+                                case 4:
+                                    Player1.weaponDmg = int(x)
+                                case 5:
+                                    Player1.crit = int(x)
+                                case 6:
+                                    Player1.miss = int(x)
+                                case 7:
+                                    Player1.numSlain = int(x)
+                                case 8:
+                                    Player1.currentChp = int(x)
+                            y = y + 1
+                    return Player1, True
+                pygame.draw.rect(gameWindow, WHITE, ((posX - 10), (pos2), 1200, 50), 1)
+                pygame.display.flip()
