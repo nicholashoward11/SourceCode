@@ -112,10 +112,10 @@ class main():
                         chosen = True
                         match selected:
                             case 1:
-                                "NEW GAME"
+                                # NEW GAME
                                 print(Player1.name, Player1.type, Player1.currentChp)
                             case 2:
-                                "CONTINUE"
+                                # CONTINUE
                                 Player1 = loadGame(gameWindow, font1, Player1, clock)
                                 if not Player1:
                                     break
@@ -124,11 +124,11 @@ class main():
                                     namePlate = font1.render(Player1.name, True, BLACK)
                                     gameWindow.blit(namePlate, namePlate.get_rect(center = gameWindow.get_rect().center))
                                     pygame.display.flip()
-                                    time.sleep(13)
+                                    time.sleep(1)
                                     pygame.quit()
                                     sys.exit()
                             case 3:
-                                "EXIT"
+                                # EXIT
                                 self.playing = False
                     pygame.draw.rect(gameWindow, WHITE, pos1, 1)
                     pygame.display.flip()
