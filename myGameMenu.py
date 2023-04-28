@@ -245,7 +245,7 @@ def loadGame(gameWindow, font1, Player1, clock):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return Player1, False
+                    return 0
                 if event.key == pygame.K_DOWN:
                     if selected == 1:
                         if loadNames[1] != "":
@@ -329,6 +329,6 @@ def loadGame(gameWindow, font1, Player1, clock):
                                 case 8:
                                     Player1.currentChp = int(x)
                             y = y + 1
-                    return Player1, True
+                    return Player1
                 pygame.draw.rect(gameWindow, WHITE, ((posX - 10), (pos2), 1200, 50), 1)
                 pygame.display.flip()

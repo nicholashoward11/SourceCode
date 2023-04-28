@@ -77,7 +77,6 @@ class main():
         rect3 = (posX - 5, posY3 - 5, 54, 30)
         pos1 = rect1
         pygame.draw.rect(gameWindow, WHITE, pos1, 1)
-        playing = True
         chosen = False
         selected = 1
         pygame.display.flip()
@@ -85,14 +84,12 @@ class main():
             clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    inMenu = False
                     pygame.quit()
-                    break
+                    sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    """ if event.key == pygame.K_ESCAPE:
-                        inMenu = False
-                        pygame.quit()
-                        sys.exit() """
+                    if event.key == pygame.K_ESCAPE:
+                        chosen = True
+                        self.playing = False
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         if selected == 1 and option2Exists:
                             pygame.draw.rect(gameWindow, BLACK, pos1, 1)
@@ -115,14 +112,24 @@ class main():
                         chosen = True
                         match selected:
                             case 1:
-                                break
-                            case 2:
-                                Player1, playing = loadGame(gameWindow, font1, Player1, clock)
+                                "NEW GAME"
                                 print(Player1.name, Player1.type, Player1.currentChp)
+                            case 2:
+                                "CONTINUE"
+                                Player1 = loadGame(gameWindow, font1, Player1, clock)
+                                if not Player1:
+                                    break
+                                else:
+                                    gameWindow.fill(WHITE)
+                                    namePlate = font1.render(Player1.name, True, BLACK)
+                                    gameWindow.blit(namePlate, namePlate.get_rect(center = gameWindow.get_rect().center))
+                                    pygame.display.flip()
+                                    time.sleep(13)
+                                    pygame.quit()
+                                    sys.exit()
                             case 3:
+                                "EXIT"
                                 self.playing = False
-                    if playing == False:
-                        break
                     pygame.draw.rect(gameWindow, WHITE, pos1, 1)
                     pygame.display.flip()
                 
