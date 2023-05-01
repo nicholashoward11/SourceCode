@@ -7,6 +7,7 @@ from myGamePlayer import *
 from myGameMenu import *
 import pygame
 from pygame.locals import *
+from PIL import Image
 
 
 
@@ -16,14 +17,14 @@ class main():
         self.playing = playing
 
     def play(self, time0):
-        Player1 = Player("", 0, 0, 0, 0, 0, 150, 0, 0)
+        Player1 = Player
         clock = pygame.time.Clock()
         font1 = pygame.font.SysFont("Consolas", 35)
         font2 = pygame.font.SysFont("Consolas", 20)
         WHITE = (255,255,255)
         BLACK = (0,0,0)
         gameWindow = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-        text = "UNEARTH"
+        text = "UNEARTHED"
         while time.time() < time0 + 5:
             clock.tick(30)
             gameWindow.fill(BLACK)
@@ -34,8 +35,12 @@ class main():
             if time.time() > time0 + 4:
                 text = "Welcome"
             pygame.display.flip()
-        gameWindow.fill((0,0,0))
-        textSurf = font1.render("UNEARTH", True, WHITE)
+        loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Main Menu/darkcave4.jpg")
+        img = loadImg.resize((1600,900))
+        img.save("c:/Users/nicho/Documents/My Creation/Art/Main Menu/1080pdarkcave4.jpg")
+        imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Main Menu/1080pdarkcave4.jpg").convert()
+        gameWindow.blit(imgSurf, (0,0))
+        textSurf = font1.render("UNEARTHED", True, WHITE)
         option1 = font2.render("New Game", True, WHITE)
         option2Exists = False
         count = 0
@@ -113,25 +118,32 @@ class main():
                         match selected:
                             case 1:
                                 # NEW GAME
-                                print(Player1.name, Player1.type, Player1.currentChp)
+                                Player1 = Player("", 0, 0, 0, 0, 0, 150, 0, 0)
                             case 2:
-                                # CONTINUE
                                 Player1 = loadGame(gameWindow, font1, Player1, clock)
-                                if not Player1:
-                                    break
-                                else:
-                                    gameWindow.fill(WHITE)
-                                    namePlate = font1.render(Player1.name, True, BLACK)
-                                    gameWindow.blit(namePlate, namePlate.get_rect(center = gameWindow.get_rect().center))
-                                    pygame.display.flip()
-                                    time.sleep(1)
-                                    pygame.quit()
-                                    sys.exit()
                             case 3:
                                 # EXIT
                                 self.playing = False
+                    gameWindow.blit(imgSurf, (0,0))
+                    posX = 250
+                    posY = 200
+                    posY1 = 0
+                    posY2 = 0
+                    posY3 = 0
+                    gameWindow.blit(textSurf, (posX,posY))
+                    posY1 = 50 + posY
+                    gameWindow.blit(option1, (posX,posY1))
+                    posY2 = 30 + posY1
+                    if option2Exists:
+                        gameWindow.blit(option2, (posX,posY2))
+                        posY3 = 30 + posY2
+                    else:
+                        posY3 = posY2
+                    gameWindow.blit(option3, (posX,posY3))
                     pygame.draw.rect(gameWindow, WHITE, pos1, 1)
                     pygame.display.flip()
+        gameWindow.fill(BLACK)
+        
                 
         
 
