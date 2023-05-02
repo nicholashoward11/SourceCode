@@ -5,6 +5,7 @@ import time
 import json
 from myGamePlayer import *
 from myGameMenu import *
+from myGameStory import *
 import pygame
 from pygame.locals import *
 from PIL import Image
@@ -25,7 +26,7 @@ class main():
         BLACK = (0,0,0)
         gameWindow = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         text = "UNEARTHED"
-        while time.time() < time0 + 5:
+        """ while time.time() < time0 + 5:
             clock.tick(30)
             gameWindow.fill(BLACK)
             textSurf = font1.render(text, True, WHITE)
@@ -34,7 +35,7 @@ class main():
                 text = "by Nicholas"
             if time.time() > time0 + 4:
                 text = "Welcome"
-            pygame.display.flip()
+            pygame.display.flip() """
         loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Main Menu/darkcave4.jpg")
         img = loadImg.resize((1600,900))
         img.save("c:/Users/nicho/Documents/My Creation/Art/Main Menu/1080pdarkcave4.jpg")
@@ -119,6 +120,7 @@ class main():
                             case 1:
                                 # NEW GAME
                                 Player1 = Player("", 0, 0, 0, 0, 0, 150, 0, 0)
+                                time.sleep(0.5)
                             case 2:
                                 Player1 = loadGame(gameWindow, font1, Player1, clock)
                             case 3:
@@ -142,7 +144,16 @@ class main():
                     gameWindow.blit(option3, (posX,posY3))
                     pygame.draw.rect(gameWindow, WHITE, pos1, 1)
                     pygame.display.flip()
-        gameWindow.fill(BLACK)
+        if self.playing:
+            if Player1.currentChp == 0:
+                
+                # Player1.getName(gameWindow, font1, clock)
+                Player1.getChar(gameWindow, font1, clock)
+                print(Player1.name)
+                """ chap1(gameWindow, Player1, clock)
+                if Player1.name != "" and Player1.type != 0:
+                    Player1.currentChp = 1 """
+
         
                 
         

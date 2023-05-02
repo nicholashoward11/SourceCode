@@ -1,7 +1,11 @@
 # This is the supporting file
 import os
 import random
+import time
 from myGameEnemy import *
+import pygame
+from pygame.locals import *
+from PIL import Image
 
 class Player:
     def __init__(self, name, type, armour, crit, weaponDmg, miss, health, numSlain, currentChp):
@@ -15,95 +19,79 @@ class Player:
         self.numSlain = numSlain
         self.currentChp = currentChp
 
-    def getName(self):
-        while self.name == "":
-            self.name = input("\nWhat is your name?: ")
-            if self.name == "":
-                print("\nCome on, I gotta know your name if I am going to narrate this")
+    def getName(self, gamewindow, font1, clock):
+        gamewindow.fill((0,0,0))
 
-    def getChar(self):
-        if self.weaponDmg == 0:
-            print("\nHello " + self.name + ", my name is Clyde")
-            print("Welcome to my game...\n")
-            print("Now I need you to choose an archetype.")
-            print("It is simple because I am not very smart.\n")
-            print("What type of warrior will you be?\n")
-            print("1. Barbarian (Med Armour, Med crit chance)")
-            print("2. Knight (High Armour, Low crit chance)")
-            print("3. Assassin (Low Armour, High crit chance)")
-            print("4. Monk (Low Armour, Low crit chance, attacks twice each turn)")
+        loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg")
+        img = loadImg.resize((1600,900))
+        img.save("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg")
+        imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg").convert()
+        message = font1.render("What is your name?", True, (255,255,255))
 
-            chosenType = False
+        gamewindow.blit(imgSurf, (0,0))
+        gamewindow.blit(message, message.get_rect(center = (800, 300)))
+        pygame.draw.rect(gamewindow, (255,255,255), (575, 425, 450, 50), 1)
+        pygame.display.flip()
+        chosen = False
+        text = ""
+        while not chosen:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        chosen = True
+                        break
+                    elif event.key == pygame.K_RETURN:
+                        if text != "":
+                            chosen = True
+                            self.name = text
+                            break
+                    elif event.key == K_BACKSPACE:
+                        if len(text) > 0:
+                            text = text[:-1]
+                    else:
+                        text += event.unicode
+                playerName = font1.render(text, True, (255,255,255))
+                gamewindow.blit(imgSurf, (0,0))
+                gamewindow.blit(message, message.get_rect(center = (750, 300)))
+                pygame.draw.rect(gamewindow, (255,255,255), (525, 420, 450, 50), 1)
+                gamewindow.blit(playerName, playerName.get_rect(center = (740, 445)))
+                pygame.display.flip()
 
-            while not chosenType:
-                try:
-                    choice = int(input("\nWhich do you choose? (Pick a number): "))
-                    if choice <= 0 or choice > 4:
-                        choice = int("stop")
-                    chosenType = True
-                except Exception:
-                    print("\nYou gotta choose something...")
+    def getChar(self, gameWindow, font1, clock):
+        imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg").convert()
+        message = font1.render("Choose your Character", True, (255,255,255))
+        archetypes = ["Berserker", "Shaman", "Paladin", "Champion", "Ranger", "Assassin", "Monk", "Vagabond"]
+        for x in range(8):
+            archetypes[x] = font1.render(archetypes[x], True, (255,255,255))
+        gameWindow.blit(imgSurf, (0,0))
+        gameWindow.blit(message, message.get_rect(center = (750, 100)))
 
-            match choice:
-                case 1:
-                    print("\nOk, Barbarians are sorta fun I think...")
-                    self.type = 1
-                    self.crit = 10
-                    self.armour = 30
-                case 2:
-                    print("\nKnight huh? Nothing wrong with old faithful")
-                    self.type = 2
-                    self.crit = 5
-                    self.armour = 45
-                case 3:
-                    print("\nAssassin...interesting, Hopefully you can make it work")
-                    self.type = 3
-                    self.crit = 15
-                    self.armour = 15
-                case 4:
-                    print("\nMonk... Devout and Resourceful")
-                    self.type = 4
-                    self.crit = 10
-                    self.armour = 15
-            input("(Press ENTER to continue...)")
-            os.system('cls')
+        pygame.draw.rect(gameWindow, (255, 255, 255), (200, 150, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (500, 150, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (800, 150, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (1100, 150, 250, 300), 4)
 
-            print("\nNext... choose your starting weapon\n")
-            print("1. Broadsword (20 dmg, 12% chance miss)")
-            print("2. Short Knife (8 dmg, 3% chance miss)")
-            print("3. Hand axe (16 dmg, 9% chance miss)")
-            print("4. Bowstaff (12 dmg, 6% chance miss)\n")
+        pygame.draw.rect(gameWindow, (255, 255, 255), (200, 500, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (500, 500, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (800, 500, 250, 300), 4)
+        pygame.draw.rect(gameWindow, (255, 255, 255), (1100, 500, 250, 300), 4)
+        
+        gameWindow.blit(archetypes[0], archetypes[0].get_rect(center = (325, 475)))
+        gameWindow.blit(archetypes[1], archetypes[1].get_rect(center = (625, 475)))
+        gameWindow.blit(archetypes[2], archetypes[2].get_rect(center = (925, 475)))
+        gameWindow.blit(archetypes[3], archetypes[3].get_rect(center = (1225, 475)))
 
-            chosenWpn = False
-            while not chosenWpn:
-                try:
-                    choice = int(input("\nPick your poison (choose a number): "))
-                    if choice <= 0 or choice > 4:
-                        choice = int("stop")
-                    chosenWpn = True
-                except Exception:
-                    print("\nYou shouldn't go empty handed...")
+        gameWindow.blit(archetypes[4], archetypes[4].get_rect(center = (325, 825)))
+        gameWindow.blit(archetypes[5], archetypes[5].get_rect(center = (625, 825)))
+        gameWindow.blit(archetypes[6], archetypes[6].get_rect(center = (925, 825)))
+        gameWindow.blit(archetypes[7], archetypes[7].get_rect(center = (1225, 825)))
+        
 
-            match choice:
-                case 1:
-                    print("\nStrong but heavy, hard to wield")
-                    self.weaponDmg = 20
-                    self.miss = 12
-                case 2:
-                    print("\nQuick and clean, yet doesnt cut too deep")
-                    self.weaponDmg = 8
-                    self.miss = 3
-                case 3:
-                    print("\nIndustry Standard, if you're a lumberjack")
-                    self.weaponDmg = 16
-                    self.miss = 9
-                case 4:
-                    print("\nBowstaff is neat")
-                    self.weaponDmg = 12
-                    self.miss = 6
+        pygame.display.flip()
+        time.sleep(2)
 
-            input("(Press ENTER to continue...)")
-            os.system('cls')
+    
+    
     
     def attack(self):
         dmg = random.randrange((self.weaponDmg * 0.75), self.weaponDmg)

@@ -5,47 +5,8 @@ import time
 import pygame
 from pygame.locals import *
 
-def pauseGame():
-        os.system('cls')
-        print("Game Paused...")
-        print("(R)esume\n(E)xit")
-        chosen = False
-        print("Choose an action: ")
-        while not chosen:
-            try:
-                if keyboard.is_pressed('r'):
-                    return True
-                if keyboard.is_pressed('e'):
-                    return False
-            except Exception:
-                print("Please choose one of the available options")
-
-def mainMenu(Player1):
-    os.system('cls')
-    print("\nUNEARTH\n")
-    print("1. New Game")
-    print("3. Exit")
-    choice = 0
-    while choice == 0:
-        try:
-            choice = int(input("\nChoose an action: "))
-            if choice <= 0 or choice > 3:
-                choice = int("stop")
-        except Exception:
-            print("Please choose one of the available options")
-    match choice:
-        case 1:
-            os.system('cls')
-            return 0
-        case 2:
-            os.system('cls')
-            loadGame(Player1)
-            return 0
-        case 3:
-            os.system('cls')
-            print("\nGoodbye...\n")
-            time.sleep(1)
-            exit()
+def pauseGame(gameWindow, font1, Player1, clock):
+       exit() 
 
 def playerDeath():
     os.system('cls')
