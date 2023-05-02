@@ -24,9 +24,6 @@ def chap1(gameWindow, Player1, clock):
     for y in range(x + 1):
         rectangles[y] = font.render(text[y], True, (0,0,0))
 
-    loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background02.jpg")
-    img = loadImg.resize((1600,900))
-    img.save("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background02.jpg")
     imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background02.jpg").convert()
     
     low = 0

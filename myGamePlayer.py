@@ -22,9 +22,6 @@ class Player:
     def getName(self, gamewindow, font1, clock):
         gamewindow.fill((0,0,0))
 
-        loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg")
-        img = loadImg.resize((1600,900))
-        img.save("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg")
         imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Text Screens/background01.jpg").convert()
         message = font1.render("What is your name?", True, (255,255,255))
 
@@ -85,10 +82,21 @@ class Player:
         gameWindow.blit(archetypes[5], archetypes[5].get_rect(center = (625, 825)))
         gameWindow.blit(archetypes[6], archetypes[6].get_rect(center = (925, 825)))
         gameWindow.blit(archetypes[7], archetypes[7].get_rect(center = (1225, 825)))
-        
+
+        picSurf = [""] * 4
+
+        picSurf[0] = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Character Sprites/Berserker/berserkerLoadScreen01.jpg").convert()
+        picSurf[1] = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Character Sprites/Shaman/shamanLoadScreen01.jpg").convert()
+        picSurf[2] = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Character Sprites/Paladin/paladinLoadScreen01.jpg").convert()
+        picSurf[3] = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Character Sprites/Champion/championLoadScreen01.jpg").convert()
+
+        gameWindow.blit(picSurf[0], picSurf[0].get_rect(center = (325, 275)))
+        gameWindow.blit(picSurf[1], picSurf[0].get_rect(center = (625, 275)))
+        gameWindow.blit(picSurf[2], picSurf[0].get_rect(center = (925, 275)))
+        gameWindow.blit(picSurf[3], picSurf[0].get_rect(center = (1225, 275)))
 
         pygame.display.flip()
-        time.sleep(2)
+        time.sleep(4)
 
     
     

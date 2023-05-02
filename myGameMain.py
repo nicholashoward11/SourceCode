@@ -36,9 +36,6 @@ class main():
             if time.time() > time0 + 4:
                 text = "Welcome"
             pygame.display.flip() """
-        loadImg = Image.open("c:/Users/nicho/Documents/My Creation/Art/Main Menu/darkcave4.jpg")
-        img = loadImg.resize((1600,900))
-        img.save("c:/Users/nicho/Documents/My Creation/Art/Main Menu/1080pdarkcave4.jpg")
         imgSurf = pygame.image.load("c:/Users/nicho/Documents/My Creation/Art/Main Menu/1080pdarkcave4.jpg").convert()
         gameWindow.blit(imgSurf, (0,0))
         textSurf = font1.render("UNEARTHED", True, WHITE)

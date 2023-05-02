@@ -170,13 +170,21 @@ def loadGame(gameWindow, font1, Player1, clock):
     for x in range(4):
         match loadType[x]:
             case 1:
-                loadType[x] = "Barbarian"
+                loadType[x] = "Berserker"
             case 2:
-                loadType[x] = "Knight"
+                loadType[x] = "Shaman"
             case 3:
-                loadType[x] = "Assassin"
+                loadType[x] = "Paladin"
             case 4:
+                loadType[x] = "Champion"
+            case 5:
+                loadType[x] = "Ranger"
+            case 6:
+                loadType[x] = "Assassin"
+            case 7:
                 loadType[x] = "Monk"
+            case 8:
+                loadType[x] = "Vagabond"
             case _:
                 loadType[x] = ""
     
